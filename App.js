@@ -1,33 +1,71 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
+import { Button, FlatList, StyleSheet, Text, TextInput, View, Modal} from 'react-native';
+import uuid from 'react-native-uuid';
 
 export default function App() {
+
+  const [newTitleProduct, setNewTitleProduct] = useState("")
+  const [newPriceProduct, setNewPriceProduct] = useState("")
+  const [products, setProducts] = useState([])
+  const [modalVisible, setModalVisible] = useState(false)
+  
+  const handlerAddProduct = () => {
+    const newProduct =  {
+      id: uuid.v4(),
+      title: newTitleProduct,
+      price: newPriceProduct,
+    }
+    setProducts(current => [...current, newProduct])
+    setNewTitleProduct("")
+    setNewPriceProduct("")
+    console.log(products)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput 
         style={styles.input}
-        placeholder='Producto'/>
-        <Button title="ADD"/>
+        placeholder='Nombre'
+        value={newTitleProduct}
+        onChangeText={(t)=> setNewTitleProduct(t)}
+        />
+
+        <TextInput 
+        style={styles.input}
+        placeholder='Precio'
+        value={newPriceProduct}
+        onChangeText={(t)=> setNewPriceProduct(t)}
+        
+        />
+        
+        <Button title="ADD" onPress= {handlerAddProduct}/>
       </View>
 
       <View style={styles.listContainer}>
-        <View style={styles.cardProduct}>
-          <Text>Coca cola</Text>
-          <Text>2200$</Text>
-          <Button title="DEL"/>
-        </View>
-        <View style={styles.cardProduct}>
-          <Text>Sprite</Text>
-          <Text>1800$</Text>
-          <Button title="DEL"/>
-        </View>
-        <View style={styles.cardProduct}>
-          <Text>Fanta</Text>
-          <Text>600$</Text>
-          <Button title="DEL"/>
-        </View>
+       <FlatList
+       data={products}
+       keyExtractor={item => item.id}
+       renderItem={ ({item})=> <View style={styles.cardProduct}>
+                                <Text>{item.title}</Text>
+                                <Text>{item.price}$</Text>
+                                <Button title="DEL" onPress={()=>{setModalVisible(true)}}/>
+                              </View>}
+       />
+
+
       </View>
+
+      <Modal
+      visible={modalVisible}
+      >
+        <View>
+          <Text> ¿Está seguro de que quiere eliminar el producto? </Text>
+          <Button title="Cerrar" onPress={()=>{setModalVisible(false)}}/>
+          <Button title="Borrar"/>
+        </View>
+      </Modal>
 
     </View>
   );
@@ -53,6 +91,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignSelf:"stretch",
+    alignItems: "center",
    /*  width: 200, */
     justifyContent: "space-around",
     margin: 10,
