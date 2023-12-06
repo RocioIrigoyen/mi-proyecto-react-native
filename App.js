@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Button, FlatList, StyleSheet, Text, TextInput, View, Modal} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import uuid from 'react-native-uuid';
 import ModalDelete from './src/components/ModalDelete';
 import AddProduct from './src/components/AddProduct';
@@ -77,7 +77,4 @@ const styles = StyleSheet.create({
     justifyContent: 'start',
     marginTop: 30,
   },
-  text: {
-    color:"white",
-  }
 });

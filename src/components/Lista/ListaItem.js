@@ -2,6 +2,7 @@ import {View, Text, Button, StyleSheet} from "react-native"
 
 const ListaItem = ({item, handlerModal}) => {
     return <View style={styles.cardProduct}>
+                <Button title="❤️" color="white"/>
                 <Text>{item.title}</Text>
                 <Text>{item.price}$</Text>
                 <Button title="DEL" onPress={()=>handlerModal(item)}/>
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       padding: 10,
       margin: 10,
-      justifyContent:"space-around",
+      justifyContent:"space-between",
       alignItems:"center",
       borderWidth:4,
     },

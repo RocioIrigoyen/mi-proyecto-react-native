@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
       flexDirection: "row",
+      backgroundColor: 'white',
       alignSelf:"stretch",
       alignItems: "center",
       justifyContent: "space-around",
